@@ -1,11 +1,13 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
+import AppMain from "./components/AppMain.vue";
 import axios from 'axios';
 import store from './data/store.js'
 
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    AppMain
   },
   data() {
     return {
@@ -28,11 +30,18 @@ export default {
       axios
         .request(options)
         .then(function (response) {
+          // console.log(response.data.results);
+          store.film = response.data.results
           console.log(response.data.results);
         })
         .catch(function (error) {
           console.error(error);
         });
+
+    },
+
+    stampa() {
+      console.log(store.film.original_title)
     }
 
 
@@ -48,9 +57,11 @@ export default {
 
   <section id="cerca">
     <input v-model="ricerca" type="text" placeholder="Cerca">
-    <span>{{ ricerca }}</span>
     <button @click="getAxios()">Invio</button>
+    <button @click="stampa()">Stampa</button>
   </section>
+
+  <AppMain />
 
 </template>
 
