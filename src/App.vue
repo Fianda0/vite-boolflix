@@ -12,14 +12,17 @@ export default {
   data() {
     return {
       store,
-      ricerca: ''
+      ricerca: '',
+      tipe: ''
     }
   },
   methods: {
+
     getAxios() {
+      this.tipe = 'movie';
       const options = {
         method: 'GET',
-        url: 'https://api.themoviedb.org/3/search/movie',
+        url: 'https://api.themoviedb.org/3/search/' + this.tipe,
         params: { query: this.ricerca, include_adult: 'false', language: 'en-US', page: '1' },
         headers: {
           accept: 'application/json',
@@ -32,6 +35,19 @@ export default {
         .then(function (response) {
           // console.log(response.data.results);
           store.film = response.data.results
+          console.log(response.data.results);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      this.tipe = 'tv';
+
+      axios
+        .request(options)
+        .then(function (response) {
+          // console.log(response.data.results);
+          store.serie = response.data.results
           console.log(response.data.results);
         })
         .catch(function (error) {
@@ -58,7 +74,6 @@ export default {
   <section id="cerca">
     <input v-model="ricerca" type="text" placeholder="Cerca">
     <button @click="getAxios()">Invio</button>
-    <button @click="stampa()">Stampa</button>
   </section>
 
   <AppMain />
