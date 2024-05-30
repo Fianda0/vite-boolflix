@@ -2,7 +2,8 @@ import { reactive } from 'vue';
 
 const ilMioOggettone = {
     film: [],
-    serie: []
+    serie: [],
+    stella: '&starf'
 };
 
 const iMieiDati = reactive(ilMioOggettone);

@@ -9,9 +9,24 @@ export default {
     },
     methods: {
         getImg(percorso) {
-            let risultato = new URL('https://image.tmdb.org/t/p/w342/' + percorso, import.meta.url);
+            let risultato = null
+            if (percorso == null) {
+                risultato = new URL('../assets/imgVuota.jpg', import.meta.url);
+            } else {
+                risultato = new URL('http://image.tmdb.org/t/p/w500/' + percorso, import.meta.url);
+            }
             return risultato.href
-        }
+        },
+        getStars(voto) {
+            let numero = voto / 2;
+            let stelle = ''
+            numero.toFixed(0)
+            for (let index = 0; index < numero; index++) {
+                stelle += store.stella
+            }
+            return stelle
+        },
+
     },
 
     mounted() {
@@ -31,7 +46,7 @@ export default {
                 <br>
                 <p><span class="title">Lingua:</span> {{ element.original_language }}</p>
                 <br>
-                <p><span class="title">Voto:</span> {{ element.popularity }}</p><span></span>
+                <p><span class="title">Voto:</span> {{ getStars(element.vote_average) }}</p><span></span>
             </div>
         </div>
         <h2>Serie TV</h2>
@@ -58,6 +73,7 @@ export default {
 }
 
 .card {
+    overflow: auto;
     border: 1px solid red;
     padding: 1rem;
     margin: 1rem;
