@@ -19,14 +19,7 @@ export default {
         },
         getStars(voto) {
             let numero = voto / 2;
-            let stelle = ''
-            numero.toFixed(0)
-            for (let index = 0; index < numero; index++) {
-                stelle += store.stella
-            }
-            return stelle
-        },
-
+        }
     },
 
     mounted() {
@@ -39,46 +32,94 @@ export default {
         <h2>Film</h2>
         <div class="container-card">
             <div v-for="element in store.film" class="card">
-                <div><img :src="getImg(element.backdrop_path)" alt=""></div>
-                <p><span class="title">Titolo:</span> {{ element.title }}</p>
-                <br>
-                <p><span class="title">Titolo Originale:</span> {{ element.original_title }}</p>
-                <br>
-                <p><span class="title">Lingua:</span> {{ element.original_language }}</p>
-                <br>
-                <p><span class="title">Voto:</span> {{ getStars(element.vote_average) }}</p><span></span>
+                <section class="imgCard"><img :src="getImg(element.backdrop_path)" alt=""></section>
+                <section class="txtCard">
+                    <p><span class="title">Titolo:</span> {{ element.title }}</p>
+                    <br>
+                    <p><span class="title">Titolo Originale:</span> {{ element.original_title }}</p>
+                    <br>
+                    <p>
+                        <span class="title">Lingua:</span>
+                        <span v-if="element.original_language == 'it'"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg"
+                                alt=""></span>
+                        <span v-else-if="element.original_language == 'en'"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg"
+                                alt=""></span>
+                        <span v-else>Non Definita</span>
+                    </p>
+                    <br>
+                    <p><span class="title">Voto:</span> {{ element.vote_average }}</p>
+                </section>
             </div>
         </div>
         <h2>Serie TV</h2>
         <div class="container-card">
             <div v-for="element in store.serie" class="card">
-                <p><span class="title">Titolo:</span> {{ element.title }}</p>
-                <br>
-                <p><span class="title">Titolo Originale:</span> {{ element.original_title }}</p>
-                <br>
-                <p><span class="title">Lingua:</span> {{ element.original_language }}</p>
-                <br>
-                <p><span class="title">Voto:</span> {{ element.popularity }}</p><span></span>
+                <section class="imgCard"><img :src="getImg(element.backdrop_path)" alt=""></section>
+                <section class="txtCard">
+                    <p><span class="title">Titolo:</span> {{ element.title }}</p>
+                    <br>
+                    <p><span class="title">Titolo Originale:</span> {{ element.original_title }}</p>
+                    <br>
+                    <p>
+                        <span class="title">Lingua:</span>
+                        <span v-if="element.original_language == 'it'"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg"
+                                alt=""></span>
+                        <span v-else-if="element.original_language == 'en'"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg"
+                                alt=""></span>
+                        <span v-else>Non Definita</span>
+                    </p>
+                    <br>
+                    <p><span class="title">Voto:</span> {{ element.vote_average }}</p>
+                </section>
             </div>
         </div>
     </main>
 </template>
 
 <style scoped>
+h2 {
+    text-align: center;
+    padding: 2rem;
+}
+
 .container-card {
     width: 100%;
-    overflow: auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card {
     overflow: auto;
-    border: 1px solid red;
-    padding: 1rem;
-    margin: 1rem;
+    border: 1px solid black;
+    padding: 0.5rem;
+    margin: 0.5rem;
     width: calc(100% / 5);
+    height: 10rem;
 }
+
+.imgCard {
+    height: 100%;
+}
+
+.txtCard {
+    display: none;
+}
+
+.card:hover .txtCard {
+    display: block;
+}
+
+.card:hover .imgCard {
+    display: none;
+}
+
+
+
 
 .title {
     color: green;
@@ -87,5 +128,14 @@ export default {
 
 img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+span img {
+    width: 20px;
+    height: 10px;
+    margin-left: 1rem;
 }
 </style>
